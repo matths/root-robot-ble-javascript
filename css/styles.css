@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.btn {
+  border: 1px solid #333333;
+  border-radius: 8px;
+  padding: 5px 8px;
+  margin: 10px 10px 10px -4px;
+}
