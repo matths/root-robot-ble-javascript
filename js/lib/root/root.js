@@ -3,6 +3,7 @@ function Root(bleDevice) {
 }
 
 Object.assign(Root.prototype, {
+
   init: function(bleDevice) {
     this.utf8TextEncoder = new TextEncoder('utf-8');
     this.utf8TextDecoder = new TextDecoder('utf-8');
@@ -25,11 +26,13 @@ Object.assign(Root.prototype, {
     this.device.touchSensors = new RootDeviceTouchSensors(this);
     this.device.cliffSensor = new RootDeviceCliffSensor(this);
   },
+
   log: function () {
     if (window.LOG) {
       console.log.apply(console, arguments);
     }
   },
+
   setup: function (doneCallback) {
     var self = this;
     this.bleDevice.getCharacteristicByServiceUuidAndCharacteristicUuid(
@@ -46,30 +49,35 @@ Object.assign(Root.prototype, {
 
             self.bleDevice.listenForNotificationValueFromCharacteristic(self.rx, self.rxHandler.bind(self));
 
-            doneCallback();
+            doneCallback(self);
           });
       });
   },
+
   crcCheck: function (dataView) {
     var checksumFromDataView = dataView.getUint8(19);
     var checksum = crc8(new Uint8Array(dataView.buffer.slice(0,19)), true);
     return (checksum == checksumFromDataView);
   },
+
   getInc: function () {
     if (this.inc > 255) {
       this.inc = 0;
     }
     return this.inc++;
   },
+
   rxHandler: function (event) {
     this.fromRobot(event.target.value); // DataView
   },
+
   timeoutRobot: function (key) {
       if (this.pending[key]) {
         clearTimeout(this.pending[key].timeout);
         delete this.pending[key];
       }
   },
+
   fromRobot: function (dataView) {
     this.log('RECEIVED', new Uint8Array(dataView.buffer));
     if (this.crcCheck(dataView)) {
@@ -90,6 +98,7 @@ Object.assign(Root.prototype, {
       }
     }
   },
+
   toRobot: function (device, command, payload, responseCallback, timeout) {
     var self = this;
     var message = new Uint8Array(20);
@@ -116,6 +125,7 @@ Object.assign(Root.prototype, {
     this.log('SENT', new Uint8Array(dataView.buffer));
     this.tx.writeValue(message.buffer);
   },
+
   listenForRobotEvent: function (device, command, responseCallback) {
     var self = this;
     var message = new Uint8Array(2);
@@ -126,12 +136,15 @@ Object.assign(Root.prototype, {
       responseCallback: responseCallback,
     }
   },
+
   decodeUtf8Text: function (arr) {
     return this.utf8TextDecoder.decode(arr);
   },
+
   encodeUtf8Text: function (str) {
     return this.utf8TextEncoder.encode(str);
   },
+
   getUint4Array: function (dataView) {
     var retArr = [];
     var arr = new Uint8Array(dataView.buffer);
@@ -143,6 +156,7 @@ Object.assign(Root.prototype, {
     })
     return retArr;
   }
+
 });
 
 Object.assign(Root.prototype, EventDispatcher.prototype);
