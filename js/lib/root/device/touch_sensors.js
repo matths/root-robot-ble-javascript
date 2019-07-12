@@ -20,10 +20,10 @@ Object.assign(RootDeviceTouchSensors.prototype, {
     var state = payload.getUint8(4);
     this.dispatchEvent({
       type: 'touch',
-      frontLeft: this.state & this.TOUCH_FRONT_LEFT,
-      frontRight: this.state & this.TOUCH_FRONT_RIGHT,
-      rearRight: this.state & this.TOUCH_REAR_RIGHT,
-      rearLeft: this.state & this.TOUCH_REAR_LEFT,
+      frontLeft: !!(state & this.TOUCH_FRONT_LEFT),
+      frontRight: !!(state & this.TOUCH_FRONT_RIGHT),
+      rearRight: !!(state & this.TOUCH_REAR_RIGHT),
+      rearLeft: !!(state & this.TOUCH_REAR_LEFT),
       state: state
     });
   }
