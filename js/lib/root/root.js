@@ -129,7 +129,7 @@ Object.assign(Root.prototype, {
   },
   getUint4Array: function (dataView) {
     var retArr = [];
-    var arr = Uint8Array(dataView.buffer);
+    var arr = new Uint8Array(dataView.buffer);
     arr.forEach(function (uint8) {
       var uint4left = (uint8 >> 4);
       var uint4right = (uint8 & 0x0f);
