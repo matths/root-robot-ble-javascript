@@ -15,7 +15,9 @@ Object.assign(BleDevice.prototype, {
     },
 
     log: function () {
-      // console.log.apply(console, arguments);
+      if (window.LOG) {
+        console.log.apply(console, arguments);
+      }
     },
 
     scanAndConnect: function () {

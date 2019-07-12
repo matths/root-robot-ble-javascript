@@ -1,3 +1,6 @@
+
+window.LOG = 1;
+
 var bleDevice = new BleDevice(Root.identifier, Root.services);
 
 bleDevice.addEventListener('connected', function (event) {

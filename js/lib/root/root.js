@@ -25,6 +25,11 @@ Object.assign(Root.prototype, {
     this.device.touchSensors = new RootDeviceTouchSensors(this);
     this.device.cliffSensor = new RootDeviceCliffSensor(this);
   },
+  log: function () {
+    if (window.LOG) {
+      console.log.apply(console, arguments);
+    }
+  },
   setup: function (doneCallback) {
     var self = this;
     this.bleDevice.getCharacteristicByServiceUuidAndCharacteristicUuid(
@@ -66,7 +71,7 @@ Object.assign(Root.prototype, {
       }
   },
   fromRobot: function (dataView) {
-    console.log('RECEIVED', new Uint8Array(dataView.buffer));
+    this.log('RECEIVED', new Uint8Array(dataView.buffer));
     if (this.crcCheck(dataView)) {
       var key = dataView.getUint16(0);
       // var device = dataView.getUint8(0);
@@ -108,7 +113,7 @@ Object.assign(Root.prototype, {
       };
     }
 
-    console.log('SENT', new Uint8Array(dataView.buffer));
+    this.log('SENT', new Uint8Array(dataView.buffer));
     this.tx.writeValue(message.buffer);
   },
   listenForRobotEvent: function (device, command, responseCallback) {
