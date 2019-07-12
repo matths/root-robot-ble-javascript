@@ -8,9 +8,7 @@ bleDevice.addEventListener('connected', function (event) {
   btnScanAndConnect.setAttribute('disabled', 'disabled');
 
   var root = new Root(bleDevice);
-  root.setup(function () {
-    window.root = root;
-  });
+  root.setup(rootIsSetup);
 });
 
 bleDevice.addEventListener('disconnected', function (event) {
@@ -30,4 +28,9 @@ function scanAndConnect (event) {
 
 function disconnect (event) {
   bleDevice.disconnect();
+}
+
+function rootIsSetup (root) {
+  console.log('start using root', root);
+  window.root = root;
 }
