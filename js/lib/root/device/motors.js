@@ -18,8 +18,6 @@ Object.assign(RootDeviceMotors.prototype, {
     this.STALL_CAUSE_SATURATED_PID = 4;
     this.STALL_CAUSE_TIMEOUT = 5;
 
-    this.BOARD_COLOR = 0xC6;
-
     this.root.listenForRobotEvent(this.device, 29, this.motorStall.bind(this));
   },
 

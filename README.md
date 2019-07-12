@@ -4,8 +4,22 @@ This is a basic Javascript implementation of the Root Robot Bluetooth Low Energy
 
 The protocol was shared by [Root Robotics](https://github.com/RootRobotics), the creators of the Root robot.
 
+## Setup
 
-## Minimum code to access root protocol methods
+You can just inclide the minified Javascript file and then you're ready to so.
+
+```html
+<script type="text/javascript" src="js/root.min.js"></script>
+```
+## Init root Object
+
+Works in all browsers supporting `navigator.bluetooth.requestDevice` (e.g. Chrome).<br>
+This is the minimum code to access the Javascript protocol implementation.<br>
+You need to trigger the Bluetooth Low energy device coupling by a user event.<br>
+That's a limitation of the browsers access to BLE devices.<br>
+
+As a result of this code snippet, you'll have a root Object,<br>
+which offers all documented protocol functions as of version 1.1
 
 ```javascript
 var bleDevice = new BleDevice(Root.identifier, Root.services);
@@ -23,7 +37,14 @@ document.addEventListener('pointerup', function() {
   bleDevice.scanAndConnect();
 });
 ```
-## Some basic examples
+
+## API
+
+See our [API documentation](API.md), what methods, evemts and properties are offered by this [Root Robot protocol](https://github.com/RootRobotics/root-robot-ble-protocol) implementation.
+
+## Examples
+
+Some very basic examples, how to use the protocol implementation (API).
 
 ### A simple queue for robot commands
 
@@ -98,6 +119,3 @@ root.device.touchSensors.addEventListener('touch', function (e) {
 window.LOG = 1; // enable logging
 ```
 
-## API
-
-more to come…
